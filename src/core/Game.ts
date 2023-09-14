@@ -70,17 +70,19 @@ export default class Game {
             .then(this.processSpinResult.bind(this));
     }
 
-    private processSpinResult(isWin: boolean) {
+    private async processSpinResult(isWin: boolean) {
         if (isWin) {
             this.scoreboard.increment();
             this.victoryScreen.show();
         }
-
+    
         if (!this.scoreboard.outOfMoney) this.playBtn.setEnabled();
+        
         if (this.scoreboard.outOfMoney) {
-            this.lossScreen.show();
+            await this.lossScreen.show();
             this.playBtn.setEnabled();
             this.scoreboard.reset();
         }
     }
+    
 }

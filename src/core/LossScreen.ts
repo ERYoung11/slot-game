@@ -11,14 +11,21 @@ export default class LossScreen {
     }
 
     show() {
-        this.container.visible = true;
-        const id = window.setTimeout(this.hide.bind(this), 5000);
-        const handler = () => {
-            window.clearTimeout(id);
-            this.hide();
-        };
-        this.overlay.addListener('pointerdown', handler.bind(this));
+        return new Promise<void>((resolve) => {
+            this.container.visible = true;
+            const id = window.setTimeout(() => {
+                this.hide();
+                resolve();
+            }, 5000);
+            const handler = () => {
+                window.clearTimeout(id);
+                this.hide();
+                resolve();
+            };
+            this.overlay.addListener('pointerdown', handler);
+        });
     }
+    
     timeout() {
         return this.timeoutValue;
     }
