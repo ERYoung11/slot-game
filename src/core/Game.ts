@@ -5,6 +5,7 @@ import Background from './Background';
 import ReelsContainer from './ReelsContainer';
 import Scoreboard from './Scoreboard';
 import VictoryScreen from './VictoryScreen';
+import LossScreen from './LossScreen';
 
 export default class Game {
     public app: PIXI.Application;
@@ -12,10 +13,14 @@ export default class Game {
     private reelsContainer: ReelsContainer;
     private scoreboard: Scoreboard;
     private victoryScreen: VictoryScreen;
+    private lossScreen: LossScreen;
 
     constructor() {
         this.app = new PIXI.Application({ width: 960, height: 536 });
-        window.document.body.appendChild(this.app.view);
+        const w = window.document.getElementById('pixi-cell')
+        if (w) {
+            w.appendChild(this.app.view);
+        }
         new Loader(this.app, this.init.bind(this));
     }
 
@@ -25,6 +30,7 @@ export default class Game {
         this.createReels();
         this.createScoreboard();
         this.createVictoryScreen();
+        this.createLossScreen();
     }
 
     private createScene() {
@@ -52,6 +58,11 @@ export default class Game {
         this.app.stage.addChild(this.victoryScreen.container);
     }
 
+    private createLossScreen() {
+        this.lossScreen = new LossScreen(this.app);
+        this.app.stage.addChild(this.lossScreen.container);
+    }
+
     handleStart() {
         this.scoreboard.decrement();
         this.playBtn.setDisabled();
@@ -66,5 +77,10 @@ export default class Game {
         }
 
         if (!this.scoreboard.outOfMoney) this.playBtn.setEnabled();
+        if (this.scoreboard.outOfMoney) {
+            this.lossScreen.show();
+            this.playBtn.setEnabled();
+            this.scoreboard.reset();
+        }
     }
 }
