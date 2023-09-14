@@ -11,6 +11,7 @@
     "dev:server": "nodemon --watch './**/*.ts' --exec 'ts-node' server.ts"
   },
   "dependencies": {
+    "@pixi/sound": "^5.2.1",
     "@types/node": "^16.4.3",
     "pixi.js": "^6.0.4"
   },

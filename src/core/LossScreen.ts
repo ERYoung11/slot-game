@@ -58,7 +58,7 @@ export default class LossScreen {
             fill: 'red',
         });
 
-        const text = new PIXI.Text('$0 Left!\nRestarting in 5s', style);
+        const text = new PIXI.Text('$0 Left!\nClick to Restart!', style);
         text.x = 70 + (rect.width - text.width) / 2;
         text.y = (appHeight - text.height) / 2;
 

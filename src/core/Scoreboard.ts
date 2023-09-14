@@ -6,7 +6,7 @@ export default class Scoreboard {
     private winAmountText: PIXI.Text;
     private moneyText: PIXI.Text;
     private winAmount: number = 0;
-    private originalMoney: number = 15;
+    private originalMoney: number = 100;
     private money: number = this.originalMoney;
     private bet: number = 5;
 
@@ -26,12 +26,11 @@ export default class Scoreboard {
     }
 
     reset() {
-        if (this.outOfMoney) {
             this.money = this.originalMoney
             this.moneyText.text = `money: $${this.money}`;
             this.winAmount = 0;
             this.winAmountText.text = `win: $${this.winAmount}`;
-        }
+            this.outOfMoney = false;
     }
 
     increment() {
