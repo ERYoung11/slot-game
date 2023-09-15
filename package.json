@@ -7,11 +7,9 @@
     "build": "webpack --mode=production",
     "start": "ts-node server.ts",
     "serve": "webpack serve --open --mode=development",
-    "serve:lan": "webpack serve --host 0.0.0.0",
-    "dev:server": "nodemon --watch './**/*.ts' --exec 'ts-node' server.ts"
+    "serve:lan": "webpack serve --host 0.0.0.0"
   },
   "dependencies": {
-    "@pixi/sound": "^5.2.1",
     "@types/node": "^16.4.3",
     "pixi.js": "^6.0.4"
   },
