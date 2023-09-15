@@ -6,6 +6,7 @@ import ReelsContainer from './ReelsContainer';
 import Scoreboard from './Scoreboard';
 import VictoryScreen from './VictoryScreen';
 import LossScreen from './LossScreen';
+import { sound } from '@pixi/sound';
 
 export default class Game {
     public app: PIXI.Application;
@@ -14,14 +15,21 @@ export default class Game {
     private scoreboard: Scoreboard;
     private victoryScreen: VictoryScreen;
     private lossScreen: LossScreen;
+    
 
     constructor() {
         this.app = new PIXI.Application({ width: 960, height: 536 });
+        // arcade-game-fruit-machine-jackpot-002-short.mp3
+        sound.add('pull', 'assets/arcade-game-fruit-machine-jackpot-002-short.mp3');
+        sound.add('win','assets/mixkit-payout-award-ding-1935.mp3')
+        sound.add('lose','assets/negative_beeps-6008.mp3')
+        sound.add('resetpurse','assets/565699__ralphwhitehead__coin-bag-pickup-drop.mp3')
         const w = window.document.getElementById('pixi-cell')
         if (w) {
             w.appendChild(this.app.view);
         }
         new Loader(this.app, this.init.bind(this));
+
     }
 
     private init() {
@@ -64,6 +72,7 @@ export default class Game {
     }
 
     handleStart() {
+        sound.play('pull')
         this.scoreboard.decrement();
         this.playBtn.setDisabled();
         this.reelsContainer.spin()
@@ -72,6 +81,7 @@ export default class Game {
 
     private async processSpinResult(isWin: boolean) {
         if (isWin) {
+            sound.play('win')
             this.scoreboard.increment();
             this.victoryScreen.show();
         }
@@ -79,9 +89,11 @@ export default class Game {
         if (!this.scoreboard.outOfMoney) this.playBtn.setEnabled();
         
         if (this.scoreboard.outOfMoney) {
+            sound.play('lose')
             await this.lossScreen.show();
             this.playBtn.setEnabled();
             this.scoreboard.reset();
+            sound.play('resetpurse')
         }
     }
     

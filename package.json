@@ -10,6 +10,8 @@
     "serve:lan": "webpack serve --host 0.0.0.0"
   },
   "dependencies": {
+    "@pixi/assets": "^7.2.4",
+    "@pixi/sound": "^5.2.1",
     "@types/node": "^16.4.3",
     "pixi.js": "^6.5.10"
   },
